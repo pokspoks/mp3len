@@ -1,6 +1,6 @@
 # Mp3len
 
-Combines total lenght of all mp3 files in a given directory and sub-directories.
+Combines total length of all mp3 files in a given directory and sub-directories.
 
 ## Prerequisites
 
