@@ -1,6 +1,7 @@
 import os
 import re
 import argparse
+import platform
 from mutagen.mp3 import MP3
 
 
@@ -11,10 +12,10 @@ def main():
                         '--dir', help='Location of your mp3 files or folders containing them')
 
     args = parser.parse_args()
+    cur_platform = platform.system()
 
     if args.dir == None:
-        print('Directory argument required.')
-        exit()
+        args.dir = os.getcwd()
 
     mp3_files = []
     total_length = 0
@@ -22,7 +23,10 @@ def main():
     for root, dirs, files in os.walk(os.path.normpath(args.dir)):
         for file in files:
             if file.endswith('.mp3'):
-                total_length += MP3(root + '\\' + file).info.length
+                if cur_platform == 'Windows':
+                    total_length += MP3(root + '\\' + file).info.length
+                else:
+                    total_length += MP3(root + '/' + file).info.length
 
     print('Total lenght of mp3 files in this directory is:')
     print(int(total_length), 'seconds or')
